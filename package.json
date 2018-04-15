@@ -2,7 +2,7 @@
   "name": "scrybl",
   "version": "0.0.1",
   "description": "Browser console override implementing Beacon API to push logging to a known endpoint.",
-  "main": "lib/index.js",
+  "main": "lib/scrybl.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
     "dev": "webpack --progress --colors --watch --env dev",
