@@ -25,7 +25,7 @@ class Scryb {
       this._url = false;
     }
 
-    const cWhiteList = ['log', 'info', 'warn', 'error', 'debug'];
+    const cWhiteList = ['log', 'error'];
     const cPropDescs = Object.getOwnPropertyDescriptors(window.console);
 
     Object.keys(cPropDescs).forEach((key) => {
@@ -49,13 +49,15 @@ class Scryb {
       }
     });
 
+    Object.freeze(this);
     window.console = this;
     Object.freeze(window.console);
-    Object.freeze(this);
   }
 
   _noop() {
-    this._log('Noop');
+    if (this.silentMode === false) {
+      this._log('Noop');
+    }
   }
 }
 
