@@ -7,16 +7,22 @@ class Scryb {
       whitelist
     } = props;
 
+    const basicErrs = [];
+
     if (silentMode !== undefined && typeof silentMode !== 'boolean') {
-      throw new Error('Option "silentMode" must be of type Boolean, if provided.');
+      basicErrs.push('Option "silentMode" must be of type Boolean, if provided.');
     }
 
     if (whitelist !== undefined && !Array.isArray(whitelist)) {
-      throw new Error('Option "whitelist" must be of type Array, if provided.');
+      basicErrs.push('Option "whitelist" must be of type Array, if provided.');
     }
 
     if (blacklist !== undefined && !Array.isArray(blacklist)) {
-      throw new Error('Option "blacklist" must be of type Array, if provided.');
+      basicErrs.push('Option "blacklist" must be of type Array, if provided.');
+    }
+
+    if (basicErrs.length > 0) v{
+      throw new Error(basicErrs.join(' '));
     }
 
     if (url !== undefined) {
@@ -25,7 +31,7 @@ class Scryb {
       this._url = false;
     }
 
-    const cWhiteList = ['log', 'error'];
+    const cWhiteList = ['log', 'warn', 'error'];
     const cPropDescs = Object.getOwnPropertyDescriptors(window.console);
 
     Object.keys(cPropDescs).forEach((key) => {
