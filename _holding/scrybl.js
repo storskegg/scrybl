@@ -21,7 +21,7 @@ class Scryb {
       basicErrs.push('Option "blacklist" must be of type Array, if provided.');
     }
 
-    if (basicErrs.length > 0) v{
+    if (basicErrs.length > 0) {
       throw new Error(basicErrs.join(' '));
     }
 
