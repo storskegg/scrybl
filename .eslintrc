@@ -1,6 +1,7 @@
 {
   "env": {
     "browser": true,
+    "cypress/globals": true,
     "es6": true,
     "node": true
   },
@@ -17,7 +18,9 @@
     "sinon": true
   },
   "parser": "babel-eslint",
-  "plugins": [],
+  "plugins": [
+    "cypress"
+  ],
   "rules": {
     "block-scoped-var": 2,
     "brace-style": [
