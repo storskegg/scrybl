@@ -22,7 +22,7 @@ class Scryb {
     if (url !== undefined) {
       this._url = url;
     } else {
-      this._url = false;
+      throw new Error('"url" is a required parameter.');
     }
 
     const cWhiteList = ['log', 'info', 'warn', 'error', 'debug'];
@@ -38,9 +38,7 @@ class Scryb {
             payloads: [...arguments]
           });
 
-          if (this._url !== false) {
-            navigator.sendBeacon(this._url, new Blob([msg], { type: 'text/plain' }));
-          }
+          navigator.sendBeacon(this._url, new Blob([msg], { type: 'text/plain' }));
 
           if (this.silentMode === false) {
             this[`_${key}`](...arguments);
