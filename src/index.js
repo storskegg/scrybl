@@ -1,28 +1,23 @@
 class Scryb {
   constructor(props) {
     const {
-      blacklist,
       silentMode,
       url,
       whitelist
     } = props;
 
     if (silentMode !== undefined && typeof silentMode !== 'boolean') {
-      throw new Error('Option "silentMode" must be of type Boolean, if provided.');
+      throw new Error('Parameter "silentMode" must be of type Boolean, if provided.');
     }
 
     if (whitelist !== undefined && !Array.isArray(whitelist)) {
-      throw new Error('Option "whitelist" must be of type Array, if provided.');
-    }
-
-    if (blacklist !== undefined && !Array.isArray(blacklist)) {
-      throw new Error('Option "blacklist" must be of type Array, if provided.');
+      throw new Error('Parameter "whitelist" must be of type Array, if provided.');
     }
 
     if (url !== undefined) {
       this._url = url;
     } else {
-      throw new Error('"url" is a required parameter.');
+      throw new Error('Missing "url" parameter.');
     }
 
     const cWhiteList = ['log', 'info', 'warn', 'error', 'debug'];
@@ -47,9 +42,9 @@ class Scryb {
       }
     });
 
+    Object.freeze(this);
     window.console = this;
     Object.freeze(window.console);
-    Object.freeze(this);
   }
 
   _noop() {
