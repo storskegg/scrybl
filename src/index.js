@@ -1,37 +1,26 @@
 class Scryb {
   constructor(props) {
     const {
-      blacklist,
       silentMode,
       url,
       whitelist
     } = props;
 
-    const basicErrs = [];
-
     if (silentMode !== undefined && typeof silentMode !== 'boolean') {
-      basicErrs.push('Option "silentMode" must be of type Boolean, if provided.');
+      throw new Error('Parameter "silentMode" must be of type Boolean, if provided.');
     }
 
     if (whitelist !== undefined && !Array.isArray(whitelist)) {
-      basicErrs.push('Option "whitelist" must be of type Array, if provided.');
-    }
-
-    if (blacklist !== undefined && !Array.isArray(blacklist)) {
-      basicErrs.push('Option "blacklist" must be of type Array, if provided.');
-    }
-
-    if (basicErrs.length > 0) {
-      throw new Error(basicErrs.join(' '));
+      throw new Error('Parameter "whitelist" must be of type Array, if provided.');
     }
 
     if (url !== undefined) {
       this._url = url;
     } else {
-      this._url = false;
+      throw new Error('Missing "url" parameter.');
     }
 
-    const cWhiteList = ['log', 'warn', 'error'];
+    const cWhiteList = ['log', 'info', 'warn', 'error', 'debug'];
     const cPropDescs = Object.getOwnPropertyDescriptors(window.console);
 
     Object.keys(cPropDescs).forEach((key) => {
@@ -44,9 +33,7 @@ class Scryb {
             payloads: [...arguments]
           });
 
-          if (this._url !== false) {
-            navigator.sendBeacon(this._url, new Blob([msg], { type: 'text/plain' }));
-          }
+          navigator.sendBeacon(this._url, new Blob([msg], { type: 'text/plain' }));
 
           if (this.silentMode === false) {
             this[`_${key}`](...arguments);
@@ -61,9 +48,7 @@ class Scryb {
   }
 
   _noop() {
-    if (this.silentMode === false) {
-      this._log('Noop');
-    }
+    this._log('Noop');
   }
 }
 
