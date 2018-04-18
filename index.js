@@ -1,5 +1,5 @@
-"use strict";
+'use strict';
 
-module.exports = function acronym(sentence, callback) {
+var scrybl = require('./lib/scrybl');
 
-}
+module.exports = scrybl;
