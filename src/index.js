@@ -1,4 +1,4 @@
-class Scryb {
+class Scrybl {
   constructor(props) {
     const {
       silentMode,
@@ -52,4 +52,4 @@ class Scryb {
   }
 }
 
-export default Scryb;
+export default Scrybl;

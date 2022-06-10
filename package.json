@@ -29,12 +29,12 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
-    "cypress": "^2.1.0",
-    "eslint": "^4.13.1",
+    "cypress": "^10.0.3",
+    "eslint": "^8.17.0",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-cypress": "^2.0.1",
-    "mocha": "^4.0.1",
-    "webpack": "^3.10.0",
-    "yargs": "^10.0.3"
+    "mocha": "^10.0.0",
+    "webpack": "^5.73.0",
+    "yargs": "^17.5.1"
   }
 }
