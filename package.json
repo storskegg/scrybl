@@ -1,6 +1,6 @@
 {
   "name": "scrybl",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "Browser console override implementing Beacon API to push logging to a known endpoint.",
   "main": "lib/scrybl.js",
   "scripts": {

@@ -3,21 +3,21 @@ class Scryb {
     const {
       silentMode,
       url,
-      whitelist
+      whitelist: allowlist
     } = props;
 
     if (silentMode !== undefined && typeof silentMode !== 'boolean') {
       throw new Error('Parameter "silentMode" must be of type Boolean, if provided.');
     }
 
-    if (whitelist !== undefined && !Array.isArray(whitelist)) {
-      throw new Error('Parameter "whitelist" must be of type Array, if provided.');
+    if (allowlist !== undefined && !Array.isArray(allowlist)) {
+      throw new Error('Parameter "allowlist" must be of type Array, if provided.');
     }
 
-    if (url !== undefined) {
+    if (url !== undefined && typeof url !== 'string') {
       this._url = url;
     } else {
-      throw new Error('Missing "url" parameter.');
+      throw new Error('Missing or non-string "url" parameter.');
     }
 
     const cWhiteList = ['log', 'info', 'warn', 'error', 'debug'];
