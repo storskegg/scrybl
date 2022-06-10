@@ -17,8 +17,9 @@
     "expect": true,
     "sinon": true
   },
-  "parser": "babel-eslint",
+//  "parser": "babel-eslint",
   "plugins": [
+    "@babel",
     "cypress"
   ],
   "rules": {
