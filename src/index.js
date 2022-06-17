@@ -4,7 +4,7 @@
  * Copyright (c) William Conrad.
  *
  * Scrybl is a library that overloads the console logging functions with versions that send logs to a target endpoint
- * using the Beacon API. It's very lightweight.
+ * using the Beacon API. It's very lightweight. Regardless of the allowList, `log` will always appear in the override.
  *
  * @param allowList Array[String] - method names you want to appear in the overloaded object (e.g. log, error, warn).
  *                                  methods not appearing in the allowList are nooped to maintain compatability.
@@ -53,23 +53,29 @@ class Scrybl {
 
     this['_log'] = cPropDescs['log'].value;
 
+    // TODO: this whole block probably needs some optimization / simplification. Come back to this.
     Object.keys(cPropDescs).forEach((key) => {
+      // Dedup
       if (typeof this[`_${key}`] === 'undefined') {
         this[`_${key}`] = cAllowList.includes(key) ? cPropDescs[key].value : this._noop;
 
-        if (cAllowList.includes(key)) {
-          this[key] = function () {
-            const msg = JSON.stringify({
-              logType: key,
-              payloads: [...arguments]
-            });
+        if (this[key] === undefined) {
+          if (cAllowList.includes(key)) {
+            this[key] = function () {
+              const msg = JSON.stringify({
+                logType: key,
+                payloads: [...arguments]
+              });
 
-            navigator.sendBeacon(this._url, new Blob([msg], { type: 'text/plain' }));
+              navigator.sendBeacon(this._url, new Blob([msg], { type: 'text/plain' }));
 
-            if (this._silentMode === false) {
-              this[`_${key}`](...arguments);
-            }
-          };
+              if (this._silentMode === false) {
+                this[`_${key}`](...arguments);
+              }
+            };
+          } else {
+            this[key] = this[`_${key}`];
+          }
         }
       }
     });
@@ -79,9 +85,12 @@ class Scrybl {
     Object.freeze(window.console);
   }
 
+  // _noop will simply console log "Noop" without using the beacon API. If silentMode is enabled, it won't even do that.
+  // console methods get _noop'd to ensure error-free compatibility with other code calling methods not in your
+  // allowList.
   _noop() {
     if (this._silentMode !== true) {
-      console.log('Noop');
+      this._log('Noop');
     }
   }
 }
