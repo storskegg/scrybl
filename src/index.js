@@ -1,5 +1,5 @@
 /**
- * Scrybl v2.0.0
+ * Scrybl v2.1.1
  * Apache2 License
  * Copyright (c) William Conrad.
  *
